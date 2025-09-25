@@ -1,0 +1,339 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{ctex}
+\usepackage{geometry}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\usetheme{Berlin}
+\usecolortheme{beaver}
+\usefonttheme{serif}
+\setbeamercovered{transparent}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single
+}
+
+\title{开玩Linux}
+\author{主讲人：臧炫懿}
+\date{2025年9月}
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}
+  \frametitle{目录}
+  \tableofcontents
+\end{frame}
+
+\section{Linux简介}
+\frame{\sectionpage}
+
+\begin{frame}
+  \frametitle{什么是Linux？}
+  \begin{multicols}{2}
+    Linux是一个操作系统，与Windows、macOS三足鼎立。
+
+    \vspace{0.5cm}
+
+    Linux与其他两个操作系统的本质区别在于它从上到下都是\textbf{开源的}，任何人都可以查看、修改和分发其源代码。因此，它有着极高的灵活性和可定制性，适用于各种应用场景。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/tux.png}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{历史渊源}
+  \begin{itemize}
+    \item<1-> 困境：20世纪80年代，UNIX昂贵且只能用于服务器、DOS简陋且闭源、Mac OS只用于苹果电脑，计算机科学教育严重受限
+    \item<2-> 契机：Andrew S. Tanenbaum发布MINIX用于教学，但是该系统功能有限，并不实用
+    \item<3-> {\color{blue}1991年，Linus Torvalds发布了Linux内核的第一个版本Linux 0.01}，该内核利用UNIX的核心、吸收了MINIX的精华，能够运行在x86架构的个人计算机上，是后来各种Linux发行版的雏形
+    \item<4-> 1994年3月，Linux 1.0发布，标志着Linux内核正式走向成熟
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{与其他内核的对比}
+  \begin{table}\small
+    \centering
+    \begin{tabular}{cccc}
+      \hline
+      内核 & 主要特点 & 适用场景 \\
+      \hline
+      Linux  & 广泛支持硬件 & 桌面、服务器、安卓设备 \\
+      \hline
+      FreeBSD & 稳定、安全性高 & 服务器、网络设备 \\
+      \hline
+      Windows NT & {\color{red}闭源}、集成度高 & 桌面、企业环境 \\
+      \hline
+      macOS XNU & 内核开源，上层闭源 & 苹果设备 \\
+      \hline
+    \end{tabular}
+    \caption{主要操作系统内核对比}
+  \end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Linux哲学}
+  \centering
+
+  \Huge
+
+  \pause
+
+  \textbf{用简单构建复杂}
+
+  \pause
+
+  \textbf{用开放促进创新}
+
+  \pause
+
+  \textbf{用协作实现共赢}
+
+\end{frame}
+
+\section{Linux发行版}
+\frame{\sectionpage}
+
+\begin{frame}
+  \frametitle{什么是发行版}
+  Linux内核本身只是操作系统的一部分，并不能满足任何日常使用的需求。人们将Linux内核与各种软件包、工具和桌面环境打包在一起，形成一个完整的操作系统，被称作Linux发行版（Distribution）。
+
+  除常见的Ubuntu、Debian、Fedora、Arch Linux等桌面发行版之外，Android也基于Linux内核，但是它使用的是自己的用户空间和应用生态，与传统Linux发行版架构差异显著，因此不被认为是一个传统的Linux发行版。
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ubuntu（Debian系，2004）}
+  \begin{multicols}{2}
+    \textbf{极为流行的Linux发行版。}
+
+    基于Debian，注重用户体验和易用性，适合Linux初学者使用。
+    有庞大的社区支持和丰富的软件资源。
+
+    每六个月发布一个新版本，每两年发布一个长期支持（LTS）版本。LTS版本一般支持5年。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/ubuntu.jpg}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Debian（Debian系，1993）}
+  \begin{multicols}{2}
+    \textbf{历史悠久且稳定的发行版。}
+
+    以其稳定性和安全性著称，适合服务器和生产环境使用。
+    拥有庞大的软件仓库，支持多种硬件架构。
+
+    更新周期较长，通常每两年发布一个新版本。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/debian.jpg}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fedora（RPM系，2003）}
+  \begin{multicols}{2}
+    \textbf{由Red Hat赞助的社区驱动发行版。}
+
+    以最新的软件包和技术为特色，适合开发者和技术爱好者。
+    通常作为Red Hat Enterprise Linux的测试平台，
+    是红帽生态的重要组成部分。
+
+    更新很快，一般每六个月发布一个新版本。
+
+    Linus Torvalds也使用Fedora。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/fedora.png}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Red Hat Enterprise Linux (RHEL)}
+  \begin{multicols}{2}
+    \textbf{面向企业的商业发行版。}
+
+    付费。
+
+    提供商业支持、认证和服务，适合企业级应用和服务器环境。
+    以稳定性和安全性著称，拥有10年支持周期。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/rhel.jpg}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{CentOS（2004 to 2024）}
+  \begin{multicols}{2}
+    \textbf{RHEL的社区版。}
+
+    重编译自RHEL的源代码，修复了许多bug，并且免费使用。
+
+    但是，2020年Red Hat宣布CentOS将转向CentOS Stream，引起了社区的广泛关注和争议。
+
+    \vspace{0.3cm}
+
+    2024年底，CentOS官方彻底停服。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/centos.jpeg}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Arch Linux（2002）}
+  \begin{multicols}{2}
+    \textbf{滚动更新的发行版。}
+
+    提供极简的基础系统，用户可以根据需求自行配置和安装软件。
+    有详尽的文档和活跃的社区，强调用户自主性和系统的可定制性。
+
+    更新最快的发行版之一。
+
+    该发行版最突出的特点是\textbf{滚动更新}，用户无需重新安装系统即可获得最新的软件和功能。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/arch.jpg}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{NixOS（2003）}
+  \begin{multicols}{2}
+    \textbf{基于Nix包管理器的独特发行版。}
+
+    采用声明式配置和原子升级，确保系统的一致性和可回滚性。
+    适合需要高度可定制和可靠性的用户和开发者。
+
+    理念极为独特，学习曲线陡峭。
+    \columnbreak
+    \includegraphics[width=0.4\textwidth]{images/nixos.jpg}
+  \end{multicols}
+\end{frame}
+
+\begin{frame}
+  \frametitle{其他发行版}
+  \begin{itemize}
+    \item Alpine Linux：体积小、启动快，适合容器和嵌入式系统
+    \item Rocky Linux：CentOS的精神继承者，由CentOS创始人亲手另起炉灶，行为和CentOS完全一致，适用于那些幻想“CentOS还在”的用户
+    \item AlmaLinux：CentOS的代餐，由CloudLinux赞助，适用于那些“管他是谁，反正免费、补丁快、有人背锅”的用户
+    \item Linux Mint：基于Ubuntu，注重用户体验和易用性
+    \item OpenSUSE：稳定且易用，适合企业和桌面用户
+    \item Kali Linux：专为渗透测试和安全研究设计的发行版
+    \item Manjaro：基于Arch Linux，注重用户友好性和易用性
+    \item Gentoo：高度可定制的源代码发行版，适合高级用户
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{国内团队维护的Linux发行版}
+  \begin{itemize}
+    \item 红旗Linux、蓝点Linux（1999）
+    \item 银河麒麟（2001）、开放麒麟（2022）
+    \item Deepin（2004）
+    \item 中标麒麟（2001），现已和银河麒麟合并
+    \item 统信UOS（2019），基于Deepin
+    \item OpenEuler：华为
+    \item AnolisOS：阿里
+    \item AOSC OS：社区驱动的发行版
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{怎么选择发行版？}
+    \begin{itemize}
+        \item <2-> 简单易用：Ubuntu、Linux Mint、Fedora
+        \item <3-> 用途原则：桌面（Ubuntu、Fedora）、服务器（Debian、CentOS/RHEL、Ubuntu）、开发（Arch Linux、Fedora）、云计算（Alpine Linux、Ubuntu Server）
+        \item <4-> 硬件支持：Ubuntu、Fedora
+        \item <5-> 软件支持：Ubuntu、Debian
+        \item <6-> 社区支持：Debian、Arch Linux
+        \item <7-> 学习和探索：Arch Linux、NixOS、Gentoo
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{其他非Linux开源操作系统}
+    \begin{itemize}
+        \item FreeBSD：类UNIX系统，注重功能、速度、稳定性等。
+        \item OpenBSD：类UNIX系统，注重安全性和代码质量，被称为“最安全的操作系统”
+        \item NetBSD：类UNIX系统，注重可移植性，支持多种硬件架构
+        \item Haiku：基于BeOS的操作系统，注重多媒体和用户体验，针对高性能和高可靠性进行优化
+    \end{itemize}
+\end{frame}
+
+\section{安装Linux}
+\frame{\sectionpage}
+\begin{frame}
+    \frametitle{怎么装？}
+    \begin{itemize}
+        \item 虚拟机：VMware、VirtualBox、QEMU/KVM
+        \item 裸机/双系统
+        \item WSL（Windows Subsystem for Linux）
+        \item CLab远程实验环境
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CLab}
+    CLab是一个远程实验环境，提供多种Linux发行版的虚拟机，供用户远程使用和学习。
+
+    \texttt{https://clab.pku.edu.cn/}
+
+    阅读其入门手册，注册账号，登录使用即可开始你的Linux之旅。
+
+    当然，你也需要使用SSH客户端连接到远程服务器，这里推荐阅读《北京大学计算机基础技能手册》7.2节来学习如何使用SSH。
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{WSL}
+
+    WSL（Windows Subsystem for Linux）是微软提供的一种在Windows上运行Linux环境的方式。
+
+    在Windows终端下输入以下命令即可安装WSL和Ubuntu发行版：
+    \begin{lstlisting}[language=bash]
+wsl --install -d Ubuntu
+    \end{lstlisting}
+    安装完成后，重启计算机，然后在开始菜单中找到Ubuntu应用程序，点击打开即可进入Linux环境。或者也可以在Windows终端中输入\texttt{wsl}命令来启动WSL。
+
+    当然，在\texttt{-d}参数后面也可以指定其他发行版，比如\texttt{Debian}等。
+\end{frame}
+
+\begin{frame}
+    \frametitle{虚拟机}
+
+    首先，你需要安装一个虚拟机软件，比如VMware Workstation、VirtualBox等。然后，从各大Linux发行版的官方网站下载ISO镜像文件。
+
+    之后，创建一个虚拟机，选择下载的ISO镜像文件作为安装介质，之后按照步骤一步步安装就可以了。
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{裸机/双系统}
+
+    在这种情况下，你需要一个U盘来制作启动盘。可以使用Rufus、balenaEtcher等工具将下载的ISO镜像烧录到U盘中。
+
+    之后，重启计算机并进入BIOS/UEFI设置，将启动顺序更改为从U盘启动。保存设置并重启，计算机会从U盘启动并进入Linux安装程序。现在就可以按照步骤一步步安装Linux了。
+
+    \vspace{0.5cm}
+
+    对于双系统等，我们可能需要另做引导等设置，建议参考各大Linux发行版的官方安装指南。一般情况下我们会用grub引导程序来管理多系统启动。
+
+\end{frame}
+
+\end{document}
