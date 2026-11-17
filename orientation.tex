@@ -1,19 +1,19 @@
-\documentclass{beamer}
+\documentclass[aspectratio=1610]{ctexbeamer}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{ctex}
 \usepackage{geometry}
 \usepackage{tcolorbox}
 \usepackage{listings}
 \usepackage{multicol}
+\usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{hyperref}
 
-\usetheme{Berlin}
-\usecolortheme{beaver}
+% \usetheme{Berlin}
+% \usecolortheme{beaver}
 \usefonttheme{serif}
 \setbeamercovered{transparent}
 
@@ -35,84 +35,79 @@
 
 \title{开玩Linux}
 \author{主讲人：臧炫懿}
-\date{2025年9月}
+\date{2026年11月}
 
 \begin{document}
 \frame{\titlepage}
-\begin{frame}
-  \frametitle{目录}
-  \tableofcontents
-\end{frame}
 
 \section{Linux简介}
-\frame{\sectionpage}
 
 \begin{frame}
   \frametitle{什么是Linux？}
-  \begin{multicols}{2}
-    Linux是一个操作系统，与Windows、macOS三足鼎立。
 
-    \vspace{0.5cm}
-
-    Linux与其他两个操作系统的本质区别在于它从上到下都是\textbf{开源的}，任何人都可以查看、修改和分发其源代码。因此，它有着极高的灵活性和可定制性，适用于各种应用场景。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/tux.png}
-  \end{multicols}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item Linux是一个类Unix操作系统内核，由Linus Torvalds于1991年首次发布。
+        \item Linux与其他两个操作系统的本质区别在于它从上到下都是\textbf{开源的}，任何人都可以查看、修改和分发其源代码。
+        \item Linux有着极高的灵活性和可定制性，其不同的发行版可以满足从个人桌面到企业服务器、从嵌入式设备到超级计算机的各种需求。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/tux.png}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
   \frametitle{历史渊源}
   \begin{itemize}
-    \item<1-> 困境：20世纪80年代，UNIX昂贵且只能用于服务器、DOS简陋且闭源、Mac OS只用于苹果电脑，计算机科学教育严重受限
-    \item<2-> 契机：Andrew S. Tanenbaum发布MINIX用于教学，但是该系统功能有限，并不实用
-    \item<3-> {\color{blue}1991年，Linus Torvalds发布了Linux内核的第一个版本Linux 0.01}，该内核利用UNIX的核心、吸收了MINIX的精华，能够运行在x86架构的个人计算机上，是后来各种Linux发行版的雏形
-    \item<4-> 1994年3月，Linux 1.0发布，标志着Linux内核正式走向成熟
+    \item 20世纪80年代，UNIX昂贵且只能用于服务器、DOS简陋且闭源、Mac OS只用于苹果电脑，计算机科学教育严重受限
+    \item 1987年，Andrew S. Tanenbaum发布MINIX用于教学，但是该系统功能有限，并不实用
+    \item \textbf{1991年，Linus Torvalds发布了Linux内核的第一个版本Linux 0.01}，该内核利用UNIX的核心、吸收了MINIX的精华，能够运行在x86架构的个人计算机上，是后来各种Linux发行版的雏形
+    \item 1994年3月，Linux 1.0发布，标志着Linux内核正式走向成熟
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{与其他内核的对比}
-  \begin{table}\small
+  \begin{table}
     \centering
-    \begin{tabular}{cccc}
-      \hline
+    \begin{tabular}{ccc}
+      \toprule
       内核 & 主要特点 & 适用场景 \\
-      \hline
+      \midrule
       Linux  & 广泛支持硬件 & 桌面、服务器、安卓设备 \\
-      \hline
+      % \hline
       FreeBSD & 稳定、安全性高 & 服务器、网络设备 \\
-      \hline
+      % \hline
       Windows NT & {\color{red}闭源}、集成度高 & 桌面、企业环境 \\
-      \hline
+      % \hline
       macOS XNU & 内核开源，上层闭源 & 苹果设备 \\
-      \hline
+      \bottomrule
     \end{tabular}
-    \caption{主要操作系统内核对比}
   \end{table}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Linux哲学}
-  \centering
+  \frametitle{题外话：操作系统内核发展史}
 
-  \Huge
-
-  \pause
-
-  \textbf{用简单构建复杂}
-
-  \pause
-
-  \textbf{用开放促进创新}
-
-  \pause
-
-  \textbf{用协作实现共赢}
+  \begin{itemize}
+    \item 在上古时期，计算机系统都是专用的，其内核都是为特定硬件量身定制的。
+    \item 1964年，IBM发布了\textbf{OS/360}，这是第一个广泛使用的\textbf{通用}操作系统。
+    \item 1970年前后，\textbf{UNIX}操作系统诞生，被广泛认为是第一个现代意义上的通用操作系统，奠定了现代操作系统的基础结构。
+    \item 1977年，\textbf{BSD}诞生，是Unix的直系后裔。它在UNIX基础上增加了虚拟内存、TCP/IP网络等关键创新。
+    \item 1991年，Linus Torvalds发布了\textbf{Linux}内核的第一个版本，标志着开源操作系统的崛起。
+    \item XNU（“X不是一个Unix”）在本世纪初被苹果公司用于macOS和iOS操作系统，结合了Mach微内核和BSD内核的特点，成为现代操作系统的重要组成部分，算是间接继承了Unix的衣钵。
+    \item NT内核则与Unix没有什么直接关系，它的祖先是DOS和VMS，但确实受到Unix的大量影响。1993年，微软发布了Windows NT内核，随后简陋的DOS被逐步抛弃。
+  \end{itemize}
 
 \end{frame}
 
 \section{Linux发行版}
-\frame{\sectionpage}
 
 \begin{frame}
   \frametitle{什么是发行版}
@@ -123,121 +118,178 @@
 
 \begin{frame}
   \frametitle{Ubuntu（Debian系，2004）}
-  \begin{multicols}{2}
-    \textbf{极为流行的Linux发行版。}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item \textbf{极为流行的Linux发行版。}
+        \item 基于Debian，注重用户体验和易用性，比较适合Linux初学者使用。
+        \item 有庞大的社区支持和丰富的软件资源。
+        \item 每六个月发布一个新版本，每两年发布一个长期支持（LTS）版本。LTS版本一般支持5年。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/ubuntu.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
 
-    基于Debian，注重用户体验和易用性，适合Linux初学者使用。
-    有庞大的社区支持和丰富的软件资源。
-
-    每六个月发布一个新版本，每两年发布一个长期支持（LTS）版本。LTS版本一般支持5年。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/ubuntu.jpg}
-  \end{multicols}
+  \begin{tcolorbox}
+  但值得注意的是，Ubuntu比较受人诟病的几点：
+  \begin{itemize}
+    \item 强推snap包，这类包与传统的deb包相比，性能差、启动慢，依赖不透明，且强制自动更新。近年来越来越多的核心组件被snap化，用户控制权实际被剥夺，导致不能信任系统包管理器。
+    \item 模型过度简化，刻意隐藏了Linux的复杂性，导致新手用户可能会用Ubuntu但实际并没有“会用Linux”。
+  \end{itemize}
+  也正因此，我个人不推荐新手使用该发行版，除非你仅仅是一个\textbf{日常用户}。但Linux日常用户的体验，实际体验大概率不如Mac或Windows。
+\end{tcolorbox}
 \end{frame}
 
 \begin{frame}
   \frametitle{Debian（Debian系，1993）}
-  \begin{multicols}{2}
-    \textbf{历史悠久且稳定的发行版。}
 
-    以其稳定性和安全性著称，适合服务器和生产环境使用。
-    拥有庞大的软件仓库，支持多种硬件架构。
-
-    更新周期较长，通常每两年发布一个新版本。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/debian.jpg}
-  \end{multicols}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item \textbf{历史悠久且稳定的发行版。}
+        \item 以其稳定性和安全性著称，适合服务器和生产环境使用。
+        \item 拥有庞大的软件仓库，支持多种硬件架构。
+        \item 更新周期较长，通常每两年发布一个新版本。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/debian.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
+  \begin{tcolorbox}
+    我个人建议那些\textbf{能用就行，懒得折腾，期望纯粹稳定性的}新手用户选择Debian。作为Ubuntu的“母亲”，Debian以坚如磐石的稳定性和纯粹的社区驱动模式著称。对于厌恶商业干预以及期望稳定的用户，Debian是理想选择。其缺憾是软件策略保守，初始设置原始，需要用户的大量自行配置，且对于最新技术的支持不及时；要是想追新的话，其实不如Cachy之类。
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}
   \frametitle{Fedora（RPM系，2003）}
-  \begin{multicols}{2}
-    \textbf{由Red Hat赞助的社区驱动发行版。}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item \textbf{由Red Hat赞助的社区驱动发行版。}
+        \item 以最新的软件包和技术为特色，适合开发者和技术爱好者。
+        \item 是红帽生态的重要组成部分，通常是最激进的、靠近最新技术的上游测试版本。也正因此不推荐将该发行版应用于长期生产环境。
+        \item 更新很快，一般每六个月发布一个新版本。
+        \item 据说Linux之父Linus Torvalds本人也在使用Fedora。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/fedora.png}
+      \end{figure}
+    \end{column}
+  \end{columns}
 
-    以最新的软件包和技术为特色，适合开发者和技术爱好者。
-    通常作为Red Hat Enterprise Linux的测试平台，
-    是红帽生态的重要组成部分。
 
-    更新很快，一般每六个月发布一个新版本。
-
-    Linus Torvalds也使用Fedora。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/fedora.png}
-  \end{multicols}
 \end{frame}
 
 \begin{frame}
   \frametitle{Red Hat Enterprise Linux (RHEL)}
-  \begin{multicols}{2}
-    \textbf{面向企业的商业发行版。}
-
-    付费。
-
-    提供商业支持、认证和服务，适合企业级应用和服务器环境。
-    以稳定性和安全性著称，拥有10年支持周期。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/rhel.jpg}
-  \end{multicols}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item \textbf{面向企业的商业发行版。}
+        \item 付费。
+        \item 提供商业支持、认证和服务，适合企业级应用和服务器环境。
+        \item 以稳定性和安全性著称，拥有10年支持周期。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/rhel.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
-  \frametitle{CentOS（2004 to 2024）}
-  \begin{multicols}{2}
-    \textbf{RHEL的社区版。}
-
-    重编译自RHEL的源代码，修复了许多bug，并且免费使用。
-
-    但是，2020年Red Hat宣布CentOS将转向CentOS Stream，引起了社区的广泛关注和争议。
-
-    \vspace{0.3cm}
-
-    2024年底，CentOS官方彻底停服。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/centos.jpeg}
-  \end{multicols}
+  \frametitle{CentOS（2004--2024）\& CentOS Stream（2020）}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item CentOS是\textbf{RHEL的社区版}。重编译自RHEL的源代码，修复了许多bug，并且免费使用。在当时，CentOS的定位是RHEL的下游替代品，适合那些不需要商业支持的企业和个人用户。该发行版在2024年正式停止维护。
+        \item CentOS Stream是RHEL的上游版本，在整个红帽生态中处于中游。这意味着它会比RHEL更快地获得新特性和更新，但也可能带来更多的不稳定性。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/centos.jpeg}
+      \end{figure}
+    \end{column}
+  \end{columns}
+  \begin{tcolorbox}
+    我个人建议\textbf{想要学习服务器管理或企业运维的}新手选择Rocky Linux。Rocky是CentOS的精神继承者，口号是“与RHEL完全一致”，提供长达10年的稳定生命周期和严格的回归测试。这意味着你可以在Rocky Linux上学习和实践RHEL的相关知识，并为将来进入企业环境打下坚实的基础。但代价是软件版本较旧，且明确被定位为 “更适合高级用户和IT专业人士”，新手大概用起来并不舒适。
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}
   \frametitle{Arch Linux（2002）}
-  \begin{multicols}{2}
-    \textbf{滚动更新的发行版。}
-
-    提供极简的基础系统，用户可以根据需求自行配置和安装软件。
-    有详尽的文档和活跃的社区，强调用户自主性和系统的可定制性。
-
-    更新最快的发行版之一。
-
-    该发行版最突出的特点是\textbf{滚动更新}，用户无需重新安装系统即可获得最新的软件和功能。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/arch.jpg}
-  \end{multicols}
+  \begin{columns}[c]
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item \textbf{极简主义和滚动更新的发行版。}
+        \item 提供极简的基础系统，用户可以根据需求自行配置和安装软件。
+        \item 有详尽的文档和活跃的社区，强调用户自主性和系统的可定制性。
+        \item Arch是更新最快的发行版之一，甚至能达到小时级别的更新速度。但也正因此其稳定性相当差，不适合生产环境。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/arch.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
+  \begin{tcolorbox}
+    我个人建议\textbf{想要深入学习Linux系统和掌握高级技能、且不怕折腾}的新手使用CachyOS。它是Arch Linux的衍生版，提供了更友好的安装程序和预配置的桌面环境，同时保留了Arch的滚动更新和高度可定制性。对于那些希望深入理解Linux系统内部工作原理并愿意投入时间学习的用户，CachyOS是一个不错的选择，且将其迁移到纯Arch Linux的难度也不大。
+  \end{tcolorbox}
 \end{frame}
 
 \begin{frame}
   \frametitle{NixOS（2003）}
-  \begin{multicols}{2}
-    \textbf{基于Nix包管理器的独特发行版。}
+  \begin{columns}
+    \begin{column}{0.75\textwidth}
+      \begin{itemize}
+        \item \textbf{基于Nix包管理器的独特发行版}：Nix自己是一个声明式的包管理器，给用户以极为精确的控制权限。
+        \item NixOS继承了Nix的优点，采用声明式配置和原子升级，确保系统的一致性和可回滚性。
+        \item 适合需要高度可定制和可靠性的用户和开发者，且可以轻易保证不同机器间的环境一致性。
+        \item 理念极为独特，学习曲线陡峭。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.15\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{images/nixos.jpg}
+      \end{figure}
+    \end{column}
+  \end{columns}
+  \begin{tcolorbox}
+    我个人不建议新手使用该系统。其独特的理念使得新手几乎无法理解其工作原理。除非你是一个\textbf{有经验的开发者}，并且已经对Linux有了一定程度的了解，否则NixOS可能会让你感到困惑和沮丧。
+  \end{tcolorbox}
 
-    采用声明式配置和原子升级，确保系统的一致性和可回滚性。
-    适合需要高度可定制和可靠性的用户和开发者。
-
-    理念极为独特，学习曲线陡峭。
-    \columnbreak
-    \includegraphics[width=0.4\textwidth]{images/nixos.jpg}
-  \end{multicols}
 \end{frame}
 
 \begin{frame}
   \frametitle{其他发行版}
   \begin{itemize}
-    \item Alpine Linux：体积小、启动快，适合容器和嵌入式系统
-    \item Rocky Linux：CentOS的精神继承者，由CentOS创始人亲手另起炉灶，行为和CentOS完全一致，适用于那些幻想“CentOS还在”的用户
-    \item AlmaLinux：CentOS的代餐，由CloudLinux赞助，适用于那些“管他是谁，反正免费、补丁快、有人背锅”的用户
-    \item Linux Mint：基于Ubuntu，注重用户体验和易用性
-    \item OpenSUSE：稳定且易用，适合企业和桌面用户
-    \item Kali Linux：专为渗透测试和安全研究设计的发行版
-    \item Manjaro：基于Arch Linux，注重用户友好性和易用性
-    \item Gentoo：高度可定制的源代码发行版，适合高级用户
+    \item OpenSUSE：稳定且易用，适合企业和桌面用户。
+    \item Alpine Linux：体积小、启动快，是docker等容器的首选基础镜像之一，也是需要一个系统的那种嵌入式最常用的发行版。
+    \item Kali Linux：专为渗透测试和安全研究设计的发行版，内置了大量的安全工具。
+    \item Linux Mint：基于Ubuntu，注重用户体验和易用性。更新策略保守。
+    \item Alma Linux：CentOS的代餐，旨在提供与RHEL兼容的免费企业级操作系统。它不保证“和RHEL完全一致”，但补丁有时候比RHEL更快，通常可以和红帽、Rocky互相替换。
+    \item Manjaro：基于Arch Linux，注重用户友好性和易用性。但近年来已经被Cachy彻底取代。
+    \item Gentoo：高度可定制的源代码发行版，适合高级用户。
   \end{itemize}
 \end{frame}
 
@@ -249,36 +301,64 @@
     \item Deepin（2004）
     \item 中标麒麟（2001），现已和银河麒麟合并
     \item 统信UOS（2019），基于Deepin
+    \item EulerOS（2019），基于CentOS
     \item OpenEuler：华为
     \item AnolisOS：阿里
-    \item AOSC OS：社区驱动的发行版
+    \item AOSC OS：安同社区驱动的发行版
   \end{itemize}
 \end{frame}
 
+\section{包管理器和桌面（窗口管理器）}
+
 \begin{frame}
-    \frametitle{怎么选择发行版？}
-    \begin{itemize}
-        \item <2-> 简单易用：Ubuntu、Linux Mint、Fedora
-        \item <3-> 用途原则：桌面（Ubuntu、Fedora）、服务器（Debian、CentOS/RHEL、Ubuntu）、开发（Arch Linux、Fedora）、云计算（Alpine Linux、Ubuntu Server）
-        \item <4-> 硬件支持：Ubuntu、Fedora
-        \item <5-> 软件支持：Ubuntu、Debian
-        \item <6-> 社区支持：Debian、Arch Linux
-        \item <7-> 学习和探索：Arch Linux、NixOS、Gentoo
-    \end{itemize}
+  \frametitle{包管理器}
+  刚刚说过，发行版本身包括“Linux内核”，以及各种“软件包、桌面环境”等。
+  
+  软件包是对用户态程序的统称，包括应用程序、库文件、配置文件等，是执行各种外部功能的工具。通常使用包管理器来安装、升级和卸载软件包。只有极少数情况才会直接从源码编译安装或直接下载二进制文件运行：前者如ComfyUI等（本体就是一大堆Python脚本，用包管理器实际不如git pull），后者如HMCL（本体就是一个Jar包，用包管理器纯属浪费时间）。
+  包管理器有两种：系统级别的，和非系统级别的。
+
+  \begin{itemize}
+    \item 系统级别包管理器大多数情况是和发行版深度绑定的，如Debian的apt，红帽系的yum/dnf，Arch系的pacman/yay/paru等。它们通常用于管理整个系统的软件包，提供依赖关系管理、版本控制和安全更新等功能。
+    \item 非系统级别包管理器则是独立于发行版的，如最经典的flatpak、snap，以及Python的pip、Node.js的npm等。它们通常用于管理特定语言或平台的软件包，提供跨发行版的安装和管理功能。
+  \end{itemize}
+
 \end{frame}
 
 \begin{frame}
-    \frametitle{其他非Linux开源操作系统}
-    \begin{itemize}
-        \item FreeBSD：类UNIX系统，注重功能、速度、稳定性等。
-        \item OpenBSD：类UNIX系统，注重安全性和代码质量，被称为“最安全的操作系统”
-        \item NetBSD：类UNIX系统，注重可移植性，支持多种硬件架构
-        \item Haiku：基于BeOS的操作系统，注重多媒体和用户体验，针对高性能和高可靠性进行优化
-    \end{itemize}
+  \frametitle{桌面环境}
+
+  桌面环境是一种特殊的软件包，它提供了图形化的用户界面和窗口管理功能，使用户能够更方便地与操作系统进行交互。经典御三家：
+  \begin{description}
+    \item[“等离子大屏幕”] 基于Qt，目前最流行的桌面环境之一：功能丰富，界面华丽，高度可定制。配套的KDE应用程序生态极为丰富且界面一贯的漂亮、现代。
+    \item[GNOME] 基于GTK，注重简洁和易用性，界面扁平很像Mac。缺陷是定制化能力差，且在GNOME 40之后的版本中，很多经典功能被移除或改变，导致部分用户不满。习惯Windows的用户使用该桌面可能会觉得不适应。
+    \item[XFCE] 基于GTK，注重轻量，界面很有XP时代的风格，算是一个“纯粹干活”的环境。不少发行版都提供了“XFCE风味版”。
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{窗口管理器}
+
+  窗口管理器是桌面环境中的一个核心组件，负责管理应用程序窗口的显示、移动、调整大小和关闭等操作，也可以单独拿出来用。现在的生态颇有百花齐放的风格，但大体可以分为两类：堆叠式和平铺式。
+  \begin{description}
+    \item[堆叠式] 传统的窗口管理方式，窗口可以自由移动和重叠，类似于Windows和macOS的窗口管理方式。经典的堆叠式窗口管理器有Openbox等。
+    \item[平铺式] 窗口按照一定的规则自动排列，不允许重叠，类似于i3、bspwm等。通常更适合键盘操作和高效的工作流程，但需要一定的学习成本。
+  \end{description}
+  现代的窗口管理器往往结合了堆叠式和平铺式的特点，提供了更多的灵活性和可定制性，如niri、awesome等。
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{题外话：Wine}
+
+  Wine是一个开源的兼容层，允许在类Unix操作系统（如Linux、macOS）上运行Windows应用程序。它通过实现Windows API，使得Windows应用程序可以在非Windows平台上运行，而无需安装Windows操作系统。其本质是系统调用的翻译官，翻译Windows的系统调用为Linux的系统调用。
+  
+  有了Wine，我们确实可以在Linux上运行一些Windows应用程序（例如一些非跨平台的游戏）。但是对于部分应用程序而言，Wine无能为力，例如部分游戏反作弊使用的插件（例如腾讯的一些游戏）是内核态的，Wine无法提供内核态的支持，因此无法运行这些游戏；还有部分软件安装或运行方式特殊（如Office，现代Office安装包的本质是一个ISO），Wine也无法支持。
+
+  所以有些时候还是得上VMWare去工作。但众所周知，现在差不多点的游戏都有反虚拟化检测，所以可能也玩不了游戏。但在VMWare上用Office却很常见，这个兼容性可是比LibreOffice和WPS都要好得多了！
+
 \end{frame}
 
 \section{安装Linux}
-\frame{\sectionpage}
 \begin{frame}
     \frametitle{怎么装？}
     \begin{itemize}
@@ -297,7 +377,7 @@
 
     阅读其入门手册，注册账号，登录使用即可开始你的Linux之旅。
 
-    当然，你也需要使用SSH客户端连接到远程服务器，这里推荐阅读《北京大学计算机基础技能手册》7.2节来学习如何使用SSH。
+    当然，你也需要使用SSH客户端连接到远程服务器，这里推荐阅读《计算机基础技能手册》来学习如何使用SSH。
 \end{frame}
 
 \begin{frame}[fragile]
@@ -326,9 +406,11 @@ wsl --install -d Ubuntu
 \begin{frame}
     \frametitle{裸机/双系统}
 
-    在这种情况下，你需要一个U盘来制作启动盘。可以使用Rufus、balenaEtcher等工具将下载的ISO镜像烧录到U盘中。
+    在这种情况下，你需要一个U盘来制作启动盘。可以使用Rufus、balenaEtcher、Ventoy等工具将下载的ISO镜像烧录到U盘中。
 
     之后，重启计算机并进入BIOS/UEFI设置，将启动顺序更改为从U盘启动。保存设置并重启，计算机会从U盘启动并进入Linux安装程序。现在就可以按照步骤一步步安装Linux了。
+
+    在这个情况下，我们还需要确认驱动的兼容性。这里推荐Arch、Cachy、Fedora这类更新比较快的发行版，它们对新硬件的支持要比Ubuntu、Debian等老牌发行版更快更好。
 
     \vspace{0.5cm}
 
